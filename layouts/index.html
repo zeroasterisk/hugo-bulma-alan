@@ -1,5 +1,5 @@
 {{ define "title"}} {{ .Site.Title}} {{end}}
-{{ define "header"}} {{ partial "menu" .}} {{end}} 
+{{ define "header"}} {{ partial "menu" .}} {{end}}
 
 {{ define "main" }}
 
@@ -11,7 +11,7 @@
         <div class="columns is-vcentered">
           <div class="column is-5">
             <figure class="image is-4by3">
-              <img class="lazyload" src="https://images.unsplash.com/photo-1487611459768-bd414656ea10?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=" alt="Description">
+              <img class="lazyload" src="/img/cover-river-costa-rica.jpg" alt="Description">
             </figure>
           </div>
           <div class="column is-6 is-offset-1">
@@ -23,17 +23,32 @@
             </h2>
             <br>
             <p class="control has-addons has-text-centered">
-              <input class="input is-expanded is-large" type="text" placeholder="Join the beta waitlist, you@example.org">
-              <a class="button is-large is-danger is-outlined">
-                Sign Up
+              <a class="button is-info is-large" href="/blog/">
+                <i class="fa fa-home fa-fw" ></i>
+                &nbsp;Personal
+              </a>
+              <a class="button is-black is-large" href="https://code.zeroasterisk.com/">
+                <i class="fa fa-code fa-fw" ></i>
+                &nbsp;Code
               </a>
             </p>
+            <div id="theme-tagcloud" class="col-sm-12" style="margin-bottom: 15px;">
+              {{ $tags := $.Site.Taxonomies.tags.ByCount }}
+              {{ $v1 := where $tags "Count" ">=" 3 }}
+              {{ $v2 := where $v1 "Term" "not in" (slice "hugo" "tags" "rss") }}
+              {{ range $v2 }}
+              {{ if .Term }}
+              {{ $tagURL := printf "tags/%s" .Term | relURL }}
+              <a href="{{ $tagURL }}" class="btn btn-default" role="button" style="text-transform: uppercase; font-size: 12px; padding-right: 5px; padding-left: 5px;" >{{ .Term }} <span class="badge">({{ .Count }})</span></a>
+              {{ end }}
+              {{ end }}
+            </div>
           </div>
         </div>
       </div>
     </div>
 </div>
 
-{{ end }} 
+{{ end }}
 
 {{ define "footer" }} {{ partial "footer" .}} {{ end }}
